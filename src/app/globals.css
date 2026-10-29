@@ -1,0 +1,102 @@
+@import "tailwindcss";
+
+/* Components live outside src/, so tell Tailwind to scan them */
+@source "../../components";
+
+/* ---------- Brand tokens (from the Core Cargo logo) ---------- */
+@theme {
+  --color-brand: #03438f;        /* primary action */
+  --color-brand-light: #2f6fc0;
+  --color-azure: #0160cb;        /* secondary action */
+  --color-azure-light: #4f95e6;
+  --color-navy: #003880;         /* secondary / deep */
+  --color-navy-light: #2a5ea8;
+  --color-ink: #0b1220;          /* authority, structure */
+  --color-graphite: #1d2633;
+  --color-steel: #5b6676;        /* neutral grey text */
+  --color-mist: #eef2f8;         /* neutral UI background */
+  --color-line: #dbe2ec;
+
+  --font-display: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-kenburns: kenburns 22s ease-out both;
+  --animate-dash: dash 3.2s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 2.2s ease-out infinite;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+@keyframes kenburns {
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
+}
+@keyframes dash {
+  0% { stroke-dashoffset: 400; }
+  60%, 100% { stroke-dashoffset: 0; }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+
+/* ---------- Base ---------- */
+html { scroll-behavior: smooth; }
+body {
+  background: #ffffff;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+
+/* ---------- Reusable utilities ---------- */
+@utility container-x {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (min-width: 640px) { padding-inline: 1.5rem; }
+  @media (min-width: 1024px) { padding-inline: 2rem; }
+}
+
+/* Primary brand gradient (#03438F family) */
+@utility bg-brand-gradient {
+  background-image: linear-gradient(135deg, #03438f 0%, #2f6fc0 100%);
+}
+/* Secondary gradient (#0160CB family) */
+@utility bg-azure-gradient {
+  background-image: linear-gradient(135deg, #0160cb 0%, #4f95e6 100%);
+}
+/* Deep gradient (#003880 family) for dark sections */
+@utility bg-navy-gradient {
+  background-image: linear-gradient(160deg, #001c40 0%, #003880 55%, #2a5ea8 130%);
+}
+/* Fine engineering grid used on dark panels */
+@utility bg-grid {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+@utility eyebrow {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Scroll reveal: elements start hidden and slide up when visible */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.2,.7,.2,1), transform .8s cubic-bezier(.2,.7,.2,1); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+/* Native <details> accordion: hide default marker */
+summary::-webkit-details-marker { display: none; }
