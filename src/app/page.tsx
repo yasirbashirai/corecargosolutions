@@ -13,7 +13,6 @@ import SectionHeading from "@/components/SectionHeading";
 import Testimonials from "@/components/Testimonials";
 import TrustedBy from "@/components/TrustedBy";
 import UkMap from "@/components/UkMap";
-import VehicleArt from "@/components/VehicleArt";
 import VehicleSelector from "@/components/VehicleSelector";
 import { IconArrow, IconBeam, IconBolt, IconBox, IconCalendar, IconChart, IconCheck, IconClock, IconFactory, IconGlobe, IconMap, IconPlane, IconShield, IconTimer, IconTruck } from "@/components/icons";
 import { airports, faqs, industries, sectors, services, vehicles } from "@/lib/site";
@@ -57,9 +56,10 @@ export default function Home() {
 
       {/* 1. HERO: strong headline, two CTAs, live dispatch widget */}
       <section className="relative isolate overflow-hidden bg-ink text-white">
-        <Image src="/images/hero-truck-road.jpg" alt="Dedicated freight truck on a UK delivery run" fill priority sizes="100vw" className="animate-kenburns -z-20 object-cover object-center" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-[#00142e] via-[#001c40]/90 to-[#003880]/30" />
-        <div className="absolute inset-x-0 bottom-0 -z-10 h-40 bg-gradient-to-t from-[#00142e] to-transparent" />
+        {/* Plain brand background, as in the design (no stock truck photo) */}
+        <div className="absolute inset-0 -z-20 bg-gradient-to-br from-[#00142e] via-[#001c40] to-[#003880]" />
+        <div className="absolute -right-40 top-0 -z-10 h-[40rem] w-[40rem] rounded-full bg-azure/25 blur-3xl" aria-hidden="true" />
+        <div className="bg-grid absolute inset-0 -z-10 opacity-25" aria-hidden="true" />
 
         <div className="container-x grid items-center gap-12 pb-24 pt-16 sm:pt-24 lg:grid-cols-12 lg:pb-32">
           <div className="lg:col-span-7">
@@ -159,7 +159,7 @@ export default function Home() {
             <div className="absolute inset-x-0 bottom-0 top-[47%] -z-20 bg-gradient-to-b from-[#465572] via-[#16233f] via-45% to-[#081530]" aria-hidden="true" />
             <span className="absolute left-7 top-7 flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 backdrop-blur"><IconTruck className="h-5 w-5" /></span>
             <div className="absolute inset-x-3 top-0 -z-10 flex h-[50.5%] items-end" aria-hidden="true">
-              <VehicleArt kind="artic" className="h-auto w-full" />
+              <Image src="/images/vehicles/artic.png" alt="" width={953} height={258} sizes="(min-width:1024px) 600px, 95vw" className="h-auto w-full drop-shadow-xl" />
             </div>
             <h3 className="text-xl font-extrabold">{services[0].title}</h3>
             <p className="mt-3 max-w-md text-white/80">{services[0].short}</p>

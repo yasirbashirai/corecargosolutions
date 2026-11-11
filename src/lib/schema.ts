@@ -12,7 +12,7 @@ export const businessSchema = {
   email: site.email,
   ...(site.phone ? { telephone: site.phone } : {}),
   logo: `${site.url}/images/logo-full.png`,
-  image: `${site.url}/images/hero-truck-road.jpg`,
+  image: `${site.url}/images/og-core-cargo.jpg`,
   address: {
     "@type": "PostalAddress",
     streetAddress: site.address.street,

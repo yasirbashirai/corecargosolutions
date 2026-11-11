@@ -3,20 +3,20 @@
 import { useState } from "react";
 import Link from "next/link";
 import { vehicles } from "@/lib/site";
-import VehicleArt from "./VehicleArt";
+import Image from "next/image";
 import { IconArrow } from "./icons";
 
 // Wider drawings for longer vehicles, so the picture grows as you move along the tabs
 const artWidth: Record<string, string> = {
-  "small-van": "max-w-[19rem]",
+  "small-van": "max-w-[20rem]",
   "swb-van": "max-w-[22rem]",
   "mwb-van": "max-w-[24rem]",
   "lwb-van": "max-w-[27rem]",
   "xlwb-van": "max-w-[29rem]",
   luton: "max-w-[29rem]",
   "rigid-75": "max-w-[31rem]",
-  "rigid-18": "max-w-[34rem]",
-  artic: "max-w-[38rem]",
+  "rigid-18": "max-w-[32rem]",
+  artic: "max-w-[34rem]",
 };
 
 /** Interactive vehicle range: pick a vehicle to see its Core Cargo picture and indicative specs. */
@@ -44,7 +44,7 @@ export default function VehicleSelector() {
       <div className="grid items-center gap-8 p-6 sm:p-10 lg:grid-cols-2">
         <div key={`art-${v.id}`} className="flex flex-col">
           <div className="flex min-h-44 items-end justify-center sm:min-h-56">
-            <VehicleArt kind={v.kind} size={v.size} className={`h-auto w-full ${artWidth[v.id]}`} />
+            <Image src={v.image.src} alt={`Core Cargo ${v.name}`} width={v.image.width} height={v.image.height} sizes="(min-width:1024px) 480px, 90vw" className={`h-auto w-full ${artWidth[v.id]}`} />
           </div>
           <p className="mt-3">
             <span className="inline-flex rounded-full bg-mist px-3 py-1 text-xs font-bold text-brand">{v.length}</span>

@@ -45,7 +45,7 @@ export default function AboutPage() {
         <div className="grid items-center gap-14 lg:grid-cols-2">
           <Reveal className="relative">
             <div className="relative aspect-[3/4] overflow-hidden rounded-3xl">
-              <Image src="/images/truck-yard-portrait.jpg" alt="Dedicated freight vehicle ready for dispatch" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
+              <Image src="/images/scene-luton-portrait.jpg" alt="Core Cargo Luton van ready for dispatch" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
             </div>
             <div className="absolute -bottom-6 -right-2 rounded-2xl bg-brand-gradient p-6 text-white shadow-2xl sm:-right-6">
               <p className="font-display text-sm font-semibold italic">&ldquo;{site.tagline}&rdquo;</p>

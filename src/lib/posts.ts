@@ -23,8 +23,8 @@ export const posts: Post[] = [
     keyword: "Same Day Freight Delivery",
     date: "2026-10-20",
     readMins: 5,
-    image: "/images/truck-temperature.jpg",
-    imageAlt: "Dedicated freight vehicle on the road for a same day delivery",
+    image: "/images/scene-artic.jpg",
+    imageAlt: "Core Cargo articulated lorry for same day dedicated delivery",
     intro:
       "Same day freight delivery is often the difference between a production line that keeps running and one that stops. Here is how a dedicated same day service works, and how to get the most from it.",
     sections: [
@@ -68,8 +68,8 @@ export const posts: Post[] = [
     keyword: "Urgent Transport Services",
     date: "2026-10-13",
     readMins: 4,
-    image: "/images/truck-tanker.jpg",
-    imageAlt: "Commercial vehicle ready for an urgent transport collection",
+    image: "/images/scene-van.jpg",
+    imageAlt: "Core Cargo van ready for an urgent collection",
     intro:
       "When freight is urgent, minutes matter. Most delays on urgent jobs come from missing information at the booking stage. This checklist helps you get a vehicle moving quickly.",
     sections: [
@@ -107,8 +107,8 @@ export const posts: Post[] = [
     keyword: "Dedicated Transport Services",
     date: "2026-10-06",
     readMins: 5,
-    image: "/images/truck-flatbed.jpg",
-    imageAlt: "Flatbed vehicle suitable for long and fabricated loads",
+    image: "/images/scene-range.jpg",
+    imageAlt: "Core Cargo vehicles in three sizes, from a small van to a rigid",
     intro:
       "Booking a vehicle that is too small causes failed collections. Booking one that is too large wastes money. Here is how to choose the right vehicle for dedicated transport.",
     sections: [
@@ -148,8 +148,8 @@ export const posts: Post[] = [
     keyword: "Transport Consultancy",
     date: "2026-09-29",
     readMins: 4,
-    image: "/images/truck-tipper.jpg",
-    imageAlt: "Commercial vehicle representing business transport costs",
+    image: "/images/scene-rigid.jpg",
+    imageAlt: "Core Cargo 7.5 tonne rigid vehicle",
     intro:
       "Transport spend tends to grow quietly. Rates drift, urgent jobs become routine, and vehicles are booked out of habit. These are the signs a review is overdue.",
     sections: [

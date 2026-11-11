@@ -84,8 +84,6 @@ export const quoteServices = [
   { id: "consultancy", label: "Transport consultancy", note: "Review my transport costs" },
 ];
 
-export type VehicleKind = "van" | "luton" | "rigid" | "artic";
-
 export type Vehicle = {
   id: string;
   name: string;
@@ -97,9 +95,8 @@ export type Vehicle = {
   height: string;
   payload: string;
   pallets: string;
-  // Drawing settings for the vehicle picture
-  kind: VehicleKind;
-  size: number;
+  // Core Cargo vehicle picture (transparent PNG in public/images/vehicles)
+  image: { src: string; width: number; height: number };
   // Upper bounds used by the quote form to suggest a vehicle
   maxKg: number;
   maxPallets: number;
@@ -110,15 +107,15 @@ export type Vehicle = {
 // Indicative UK vehicle specifications. Actual capacity varies by make and model.
 // TODO: MWB Van figures are estimates, confirm with the client.
 export const vehicles: Vehicle[] = [
-  { id: "small-van", name: "Small Van", article: "a", bestFor: "Documents, samples and small parts", length: "1.2–1.5 m", width: "1.2 m", height: "1.1 m", payload: "350–450 kg", pallets: "1 pallet", kind: "van", size: 0, maxKg: 450, maxPallets: 1, maxLength: 1.5, tailLift: false },
-  { id: "swb-van", name: "SWB Van", article: "an", bestFor: "Boxed goods and single pallets", length: "2.4 m", width: "1.2 m", height: "1.6 m", payload: "800–1,000 kg", pallets: "2 pallets", kind: "van", size: 1, maxKg: 1000, maxPallets: 2, maxLength: 2.4, tailLift: false },
-  { id: "mwb-van", name: "MWB Van", article: "an", bestFor: "Mixed loads and machine parts", length: "3.0 m", width: "1.2 m", height: "1.6–1.7 m", payload: "1,000–1,100 kg", pallets: "2 pallets", kind: "van", size: 2, maxKg: 1100, maxPallets: 2, maxLength: 3.0, tailLift: false },
-  { id: "lwb-van", name: "LWB Van", article: "an", bestFor: "Long items and multi-pallet loads", length: "4.0 m", width: "1.2 m", height: "1.7 m", payload: "1,000–1,250 kg", pallets: "3 pallets", kind: "van", size: 3, maxKg: 1250, maxPallets: 3, maxLength: 4.0, tailLift: false },
-  { id: "xlwb-van", name: "XLWB Van", article: "an", bestFor: "Taller, heavier multi-pallet loads", length: "4.0 m", width: "1.25 m", height: "1.75 m", payload: "1,250–1,400 kg", pallets: "4 pallets", kind: "van", size: 4, maxKg: 1400, maxPallets: 4, maxLength: 4.0, tailLift: false },
-  { id: "luton", name: "Luton with Tail Lift", article: "a", bestFor: "Bulky freight without a forklift on site", length: "4.2–4.6 m", width: "2.2 m", height: "2.0–2.4 m", payload: "1,000–1,400 kg", pallets: "6 pallets", kind: "luton", size: 0, maxKg: 1400, maxPallets: 6, maxLength: 4.6, tailLift: true },
-  { id: "rigid-75", name: "7.5 Tonne Rigid", article: "a", bestFor: "Part loads and fabricated steel", length: "6.0 m", width: "2.4 m", height: "2.4 m", payload: "2,400 kg", pallets: "10 pallets", kind: "rigid", size: 0, maxKg: 2400, maxPallets: 10, maxLength: 6.0, tailLift: true },
-  { id: "rigid-18", name: "18 Tonne Rigid", article: "an", bestFor: "Heavy part loads and plant", length: "7.6 m", width: "2.4 m", height: "2.4 m", payload: "9,000 kg", pallets: "14 pallets", kind: "rigid", size: 1, maxKg: 9000, maxPallets: 14, maxLength: 7.6, tailLift: true },
-  { id: "artic", name: "Articulated Lorry", article: "an", bestFor: "Full loads, nationwide", length: "13.6 m", width: "2.45 m", height: "2.6–2.9 m", payload: "24,000 kg", pallets: "26 pallets", kind: "artic", size: 0, maxKg: 24000, maxPallets: 26, maxLength: 13.6, tailLift: false },
+  { id: "small-van", image: { src: "/images/vehicles/small-van.png", width: 810, height: 366 }, name: "Small Van", article: "a", bestFor: "Documents, samples and small parts", length: "1.2–1.5 m", width: "1.2 m", height: "1.1 m", payload: "350–450 kg", pallets: "1 pallet", maxKg: 450, maxPallets: 1, maxLength: 1.5, tailLift: false },
+  { id: "swb-van", image: { src: "/images/vehicles/swb-van.png", width: 811, height: 382 }, name: "SWB Van", article: "an", bestFor: "Boxed goods and single pallets", length: "2.4 m", width: "1.2 m", height: "1.6 m", payload: "800–1,000 kg", pallets: "2 pallets", maxKg: 1000, maxPallets: 2, maxLength: 2.4, tailLift: false },
+  { id: "mwb-van", image: { src: "/images/vehicles/mwb-van.png", width: 863, height: 382 }, name: "MWB Van", article: "an", bestFor: "Mixed loads and machine parts", length: "3.0 m", width: "1.2 m", height: "1.6–1.7 m", payload: "1,000–1,100 kg", pallets: "2 pallets", maxKg: 1100, maxPallets: 2, maxLength: 3.0, tailLift: false },
+  { id: "lwb-van", image: { src: "/images/vehicles/lwb-van.png", width: 882, height: 369 }, name: "LWB Van", article: "an", bestFor: "Long items and multi-pallet loads", length: "4.0 m", width: "1.2 m", height: "1.7 m", payload: "1,000–1,250 kg", pallets: "3 pallets", maxKg: 1250, maxPallets: 3, maxLength: 4.0, tailLift: false },
+  { id: "xlwb-van", image: { src: "/images/vehicles/xlwb-van.png", width: 887, height: 337 }, name: "XLWB Van", article: "an", bestFor: "Taller, heavier multi-pallet loads", length: "4.0 m", width: "1.25 m", height: "1.75 m", payload: "1,250–1,400 kg", pallets: "4 pallets", maxKg: 1400, maxPallets: 4, maxLength: 4.0, tailLift: false },
+  { id: "luton", image: { src: "/images/vehicles/luton.png", width: 885, height: 405 }, name: "Luton with Tail Lift", article: "a", bestFor: "Bulky freight without a forklift on site", length: "4.2–4.6 m", width: "2.2 m", height: "2.0–2.4 m", payload: "1,000–1,400 kg", pallets: "6 pallets", maxKg: 1400, maxPallets: 6, maxLength: 4.6, tailLift: true },
+  { id: "rigid-75", image: { src: "/images/vehicles/rigid-75.png", width: 853, height: 387 }, name: "7.5 Tonne Rigid", article: "a", bestFor: "Part loads and fabricated steel", length: "6.0 m", width: "2.4 m", height: "2.4 m", payload: "2,400 kg", pallets: "10 pallets", maxKg: 2400, maxPallets: 10, maxLength: 6.0, tailLift: true },
+  { id: "rigid-18", image: { src: "/images/vehicles/rigid-18.png", width: 873, height: 324 }, name: "18 Tonne Rigid", article: "an", bestFor: "Heavy part loads and plant", length: "7.6 m", width: "2.4 m", height: "2.4 m", payload: "9,000 kg", pallets: "14 pallets", maxKg: 9000, maxPallets: 14, maxLength: 7.6, tailLift: true },
+  { id: "artic", image: { src: "/images/vehicles/artic.png", width: 953, height: 258 }, name: "Articulated Lorry", article: "an", bestFor: "Full loads, nationwide", length: "13.6 m", width: "2.45 m", height: "2.6–2.9 m", payload: "24,000 kg", pallets: "26 pallets", maxKg: 24000, maxPallets: 26, maxLength: 13.6, tailLift: false },
 ];
 
 // Smallest vehicle that fits the stated weight, pallet count and longest item.

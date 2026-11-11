@@ -44,8 +44,6 @@ export default function ServicesPage() {
         eyebrow="Services"
         title={<>Dedicated transport services for <span className="text-azure-light">urgent freight.</span></>}
         intro="Same day, urgent and next day dedicated transport across the UK, plus transport consultancy for businesses that want more control over freight costs."
-        image="/images/truck-motorway.jpg"
-        imageAlt="Dedicated freight vehicle on a UK motorway"
       >
         <Button href="#quote">Get a quote</Button>
         <Button href="#vehicles" variant="ghost">View vehicle range</Button>
