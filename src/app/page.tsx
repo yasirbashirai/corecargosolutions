@@ -3,35 +3,52 @@ import Link from "next/link";
 import Button from "@/components/Button";
 import CountUp from "@/components/CountUp";
 import CtaBand from "@/components/CtaBand";
-import Faq from "@/components/Faq";
+import FaqSection from "@/components/FaqSection";
+import HowItWorks from "@/components/HowItWorks";
 import JsonLd from "@/components/JsonLd";
 import QuoteSection from "@/components/QuoteSection";
+import ResponseTimer from "@/components/ResponseTimer";
 import Reveal from "@/components/Reveal";
 import SectionHeading from "@/components/SectionHeading";
+import Testimonials from "@/components/Testimonials";
+import TrustedBy from "@/components/TrustedBy";
+import UkMap from "@/components/UkMap";
+import VehicleArt from "@/components/VehicleArt";
 import VehicleSelector from "@/components/VehicleSelector";
-import { IconArrow, IconBolt, IconCalendar, IconChart, IconCheck, IconClock, IconFactory, IconGlobe, IconMap, IconShield, IconTools, IconTruck } from "@/components/icons";
-import { faqs, sectors, services, site } from "@/lib/site";
+import { IconArrow, IconBeam, IconBolt, IconBox, IconCalendar, IconChart, IconCheck, IconClock, IconFactory, IconGlobe, IconMap, IconPlane, IconShield, IconTimer, IconTruck } from "@/components/icons";
+import { airports, faqs, industries, sectors, services, vehicles } from "@/lib/site";
 import { faqSchema } from "@/lib/schema";
 
 const serviceIcons = [IconTruck, IconBolt, IconCalendar, IconChart];
-const sectorIcons = [IconFactory, IconGlobe, IconTools];
+const sectorIcons = [IconFactory, IconGlobe, IconBeam];
 
-// Honest operating metrics (commitments, not inflated volume claims)
+// Key stats: each one is a commitment with a plain sentence under it
 const metrics = [
-  { value: 24, suffix: "/7", label: "Operations", note: "Every day of the year" },
-  { value: 60, suffix: " min", label: "Collection target", note: "For urgent consignments" },
-  { value: 8, suffix: "", label: "Vehicle classes", note: "Small van to articulated" },
-  { value: 1, suffix: " load", label: "Per vehicle", note: "Dedicated, never shared" },
+  { icon: IconClock, value: 24, suffix: "/7", label: "Always on", note: "Someone is here every day of the year, weekends and bank holidays included." },
+  { icon: IconTimer, value: 60, suffix: "min", label: "Collection target", note: "For urgent jobs we aim to have a driver with you within the hour." },
+  { icon: IconTruck, value: vehicles.length, suffix: "vehicles", label: "Sizes to choose from", note: "From a small van to an articulated lorry, so you only pay for what you need." },
+  { icon: IconBox, value: 1, suffix: "load", label: "Per vehicle", note: "Your goods travel on their own. Never shared, never moved between depots." },
 ];
 
-const journey = [
-  { title: "Request a quote", text: "Share postcodes and load details. The form suggests the right vehicle instantly." },
-  { title: "Confirm & dispatch", text: "We confirm price and collection time. A dedicated vehicle is dispatched." },
-  { title: "Direct collection", text: "Your goods are loaded and driven straight to destination, no depots." },
-  { title: "Delivered & signed", text: "Proof of delivery is sent the moment the consignment is signed for." },
+// Scrolling ticker: short promises (bright) mixed with the cities covered (dimmer)
+const ticker: [string, boolean][] = [
+  ["Collected within the hour", true], ["Manchester", false], ["Birmingham", false],
+  ["One driver, one load", true], ["Leeds", false], ["London", false],
+  ["Signed proof of delivery", true], ["Cardiff", false], ["Glasgow", false],
+  ["Vans to articulated lorries", true], ["Newcastle", false], ["Bristol", false],
+  ["Open 24/7, bank holidays too", true], ["Edinburgh", false], ["Belfast", false],
+  ["Nationwide", true],
 ];
 
-const ticker = ["Same Day Freight Delivery", "Dedicated Transport Services", "Urgent Transport Services", "Collections Within the Hour", "Next Day Dedicated", "Transport Consultancy", "UK Nationwide", "24/7 Operations"];
+const airportTicks = [
+  "Collected straight from the cargo terminal",
+  "Driven direct, with no depot stops",
+  "Any hour, any day of the week",
+  "Proof of delivery within the hour",
+];
+
+// Service cards link to the quote form with that service already selected
+const quoteLink = (id: string) => `/?service=${id}#quote`;
 
 export default function Home() {
   return (
@@ -47,15 +64,13 @@ export default function Home() {
         <div className="container-x grid items-center gap-12 pb-24 pt-16 sm:pt-24 lg:grid-cols-12 lg:pb-32">
           <div className="lg:col-span-7">
             <Reveal>
-              <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold backdrop-blur">
-                <span className="h-2 w-2 rounded-full bg-emerald-400" /> Manchester based · Delivering UK nationwide
-              </span>
-              <h1 className="mt-6 text-4xl font-black leading-[1.02] sm:text-6xl lg:text-7xl">
-                Urgent &amp; Same Day Transport,{" "}
-                <span className="bg-gradient-to-r from-[#7fb4f2] to-white bg-clip-text text-transparent">dedicated to your load.</span>
+              <ResponseTimer />
+              <h1 className="mt-6 text-[2.5rem] font-black leading-[1.05] sm:text-5xl lg:text-[3.6rem]">
+                Freight that can’t wait?{" "}
+                <span className="bg-gradient-to-r from-[#7fb4f2] to-white bg-clip-text text-transparent">We’re already on our way.</span>
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">
-                One vehicle. One consignment. Collected within the hour and driven direct to destination, 24 hours a day, anywhere in the UK.
+                A van and driver just for your load. We collect within the hour and drive it straight to the door, day or night, Nationwide.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <Button href="/contact#quote">Get an instant quote</Button>
@@ -76,19 +91,10 @@ export default function Home() {
                 <p className="eyebrow text-white/60">Dedicated run</p>
                 <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300">Direct route</span>
               </div>
-              <svg viewBox="0 0 320 120" className="mt-4 w-full" aria-hidden="true">
-                <path d="M20 90 C 90 20, 170 120, 300 30" fill="none" stroke="rgba(255,255,255,.15)" strokeWidth="3" />
-                <path d="M20 90 C 90 20, 170 120, 300 30" fill="none" stroke="url(#route)" strokeWidth="3" strokeLinecap="round" strokeDasharray="400" className="animate-dash" />
-                <defs>
-                  <linearGradient id="route" x1="0" x2="1"><stop offset="0" stopColor="#4f95e6" /><stop offset="1" stopColor="#ffffff" /></linearGradient>
-                </defs>
-                <circle cx="20" cy="90" r="6" fill="#4f95e6" />
-                <circle cx="300" cy="30" r="6" fill="#fff" />
-                <circle cx="300" cy="30" r="6" fill="none" stroke="#fff" className="animate-pulse-ring origin-[300px_30px]" />
-              </svg>
+              <UkMap />
               <div className="mt-2 flex justify-between text-sm">
                 <div><p className="text-white/50">Collection</p><p className="font-display font-bold">Your site</p></div>
-                <div className="text-right"><p className="text-white/50">Delivery</p><p className="font-display font-bold">Anywhere in the UK</p></div>
+                <div className="text-right"><p className="text-white/50">Delivery</p><p className="font-display font-bold">Nationwide</p></div>
               </div>
               <ol className="mt-6 space-y-3 border-t border-white/10 pt-5 text-sm">
                 {[
@@ -110,47 +116,57 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Keyword ticker */}
+      {/* Ticker: promises and cities, moving right to left */}
       <div className="overflow-hidden border-y border-white/10 bg-brand-gradient py-4 text-white" aria-hidden="true">
-        <div className="animate-marquee flex w-max gap-10 whitespace-nowrap font-display text-sm font-bold uppercase tracking-[0.2em]">
-          {[...ticker, ...ticker].map((t, i) => (
-            <span key={i} className="flex items-center gap-10">{t}<span className="h-1.5 w-1.5 rounded-full bg-white/50" /></span>
+        <div className="animate-marquee flex w-max whitespace-nowrap font-sans text-sm uppercase tracking-[0.16em]">
+          {[...ticker, ...ticker].map(([t, strong], i) => (
+            <span key={i} className={`flex items-center ${strong ? "font-bold text-white" : "font-medium text-white/75"}`}>
+              {t}<span className="mx-7 h-1.5 w-1.5 rounded-full bg-white/45" />
+            </span>
           ))}
         </div>
       </div>
 
-      {/* 2. INFRASTRUCTURE METRICS */}
+      {/* 2. KEY STATS */}
       <section className="container-x py-20 sm:py-24">
-        <div className="grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto grid max-w-6xl gap-px overflow-hidden rounded-3xl border border-line bg-line shadow-xl shadow-ink/5 sm:grid-cols-2 lg:grid-cols-4">
           {metrics.map((m, i) => (
-            <Reveal key={m.label} delay={i * 100} className="bg-white p-8">
-              <p className="font-display text-5xl font-black text-brand">
-                <CountUp to={m.value} suffix={m.suffix} />
+            <Reveal key={m.label} delay={i * 100} className="bg-white p-7">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-mist text-brand"><m.icon className="h-5 w-5" /></span>
+              <p className="mt-5 flex items-baseline gap-1.5 font-display font-black text-brand">
+                <span className="text-5xl"><CountUp to={m.value} /></span>
+                <span className="text-xl font-extrabold text-azure">{m.suffix}</span>
               </p>
-              <p className="mt-3 font-display font-bold text-ink">{m.label}</p>
-              <p className="text-sm text-steel">{m.note}</p>
+              <p className="mt-2 font-sans font-bold text-ink">{m.label}</p>
+              <p className="mt-1 text-sm leading-relaxed text-steel">{m.note}</p>
             </Reveal>
           ))}
         </div>
       </section>
 
-      {/* 3. SERVICES: clear segmentation in a bento grid */}
+      {/* 3. SERVICES: four cards, each with a tag and a quote button */}
       <section className="container-x pb-20 sm:pb-28">
         <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
-          <SectionHeading eyebrow="Our services" title={<>Transport built around <span className="text-azure">time-critical</span> freight.</>} />
-          <Reveal><Button href="/services" variant="secondary">All services</Button></Reveal>
+          <SectionHeading eyebrow="Our services" title="How fast do you need it there?" intro="Four ways to move your freight. Not sure which one fits? Tell us what you are moving and we will point you to the right one." />
+          <Reveal className="shrink-0"><Button href="/services" variant="primary">All services</Button></Reveal>
         </div>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-3 lg:grid-rows-2">
-          {/* Featured tile with photography */}
-          <Reveal className="group relative isolate min-h-[26rem] overflow-hidden rounded-3xl text-white lg:row-span-2">
-            <Image src="/images/truck-dedicated.jpg" alt="Dedicated transport vehicle ready for collection" fill sizes="(min-width:1024px) 33vw, 100vw" className="-z-20 object-cover transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#001c40] via-[#001c40]/60 to-transparent" />
-            <div className="flex h-full flex-col justify-end p-8">
-              <span className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15 backdrop-blur"><IconTruck /></span>
-              <h3 className="text-2xl font-extrabold">{services[0].title}</h3>
-              <p className="mt-3 text-white/75">{services[0].short}</p>
-              <Link href={`/services#${services[0].id}`} className="mt-5 inline-flex items-center gap-2 text-sm font-semibold">Learn more <IconArrow className="h-4 w-4" /></Link>
+        <div className="mt-12 grid gap-5 lg:grid-cols-4">
+          {/* Featured card with the Core Cargo articulated lorry */}
+          <Reveal className="relative isolate flex min-h-[34rem] flex-col justify-end overflow-hidden rounded-3xl p-7 text-white sm:p-8 lg:col-span-2 lg:row-span-2">
+            {/* sky, then dark road from the horizon down */}
+            <div className="absolute inset-0 -z-20 bg-gradient-to-b from-[#5f86c9] to-[#b9c6dc] to-50%" aria-hidden="true" />
+            <div className="absolute inset-x-0 bottom-0 top-[47%] -z-20 bg-gradient-to-b from-[#465572] via-[#16233f] via-45% to-[#081530]" aria-hidden="true" />
+            <span className="absolute left-7 top-7 flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 backdrop-blur"><IconTruck className="h-5 w-5" /></span>
+            <div className="absolute inset-x-3 top-0 -z-10 flex h-[50.5%] items-end" aria-hidden="true">
+              <VehicleArt kind="artic" className="h-auto w-full" />
+            </div>
+            <h3 className="text-xl font-extrabold">{services[0].title}</h3>
+            <p className="mt-3 max-w-md text-white/80">{services[0].short}</p>
+            <p className="mt-4"><span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">{services[0].tag}</span></p>
+            <div className="mt-6 flex items-center justify-between gap-4">
+              <Link href={`/services#${services[0].id}`} className="group inline-flex items-center gap-2 text-sm font-bold">Learn more <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" /></Link>
+              <Link href={quoteLink(services[0].id)} className="rounded-full border border-white/60 px-4 py-1.5 text-sm font-semibold transition hover:bg-white hover:text-brand">Get a quote</Link>
             </div>
           </Reveal>
 
@@ -161,14 +177,20 @@ export default function Home() {
               <Reveal
                 key={s.id}
                 delay={(i + 1) * 100}
-                className={`group flex flex-col rounded-3xl border p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${highlight ? "border-transparent bg-brand-gradient text-white lg:col-span-2" : "border-line bg-white hover:border-azure/40"}`}
+                className={`group flex flex-col rounded-3xl border p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${highlight ? "border-transparent bg-brand-gradient text-white lg:col-span-2" : "border-line bg-white hover:border-azure/40"}`}
               >
-                <span className={`flex h-12 w-12 items-center justify-center rounded-2xl ${highlight ? "bg-white/15" : "bg-mist text-brand"}`}><Icon /></span>
+                <span className={`flex h-11 w-11 items-center justify-center rounded-xl ${highlight ? "bg-white/15" : "bg-mist text-brand"}`}><Icon className="h-5 w-5" /></span>
                 <h3 className={`mt-6 text-xl font-extrabold ${highlight ? "" : "text-ink"}`}>{s.title}</h3>
-                <p className={`mt-3 flex-1 ${highlight ? "text-white/80" : "text-steel"}`}>{s.short}</p>
-                <Link href={`/services#${s.id}`} className={`mt-5 inline-flex items-center gap-2 text-sm font-semibold ${highlight ? "" : "text-azure"}`}>
-                  Learn more <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                </Link>
+                <p className={`mt-3 flex-1 ${highlight ? "text-white/85" : "text-steel"}`}>{s.short}</p>
+                <p className="mt-4"><span className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${highlight ? "bg-white/15" : "bg-mist text-brand"}`}>{s.tag}</span></p>
+                <div className="mt-6 flex flex-wrap items-center justify-between gap-3">
+                  <Link href={`/services#${s.id}`} className="inline-flex items-center gap-2 text-sm font-bold">
+                    Learn more <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
+                  <Link href={quoteLink(s.id)} className={`rounded-full border px-4 py-1.5 text-sm font-semibold transition ${highlight ? "border-white/60 hover:bg-white hover:text-brand" : "border-ink/70 text-ink hover:bg-ink hover:text-white"}`}>
+                    {s.id === "consultancy" ? "Get a review" : "Get a quote"}
+                  </Link>
+                </div>
               </Reveal>
             );
           })}
@@ -192,63 +214,101 @@ export default function Home() {
       <section className="relative overflow-hidden bg-navy-gradient py-20 text-white sm:py-28">
         <div className="bg-grid absolute inset-0 opacity-30" aria-hidden="true" />
         <div className="container-x relative">
-          <SectionHeading dark eyebrow="How it works" title="From quote to proof of delivery in four steps." center />
-          <div className="relative mt-16">
-          <div className="absolute left-0 right-0 top-7 hidden h-px bg-gradient-to-r from-transparent via-white/30 to-transparent md:block" aria-hidden="true" />
-          <ol className="relative grid gap-8 md:grid-cols-4">
-            {journey.map((p, i) => (
-              <Reveal as="li" key={p.title} delay={i * 120} className="relative text-center">
-                <span className="relative mx-auto flex h-14 w-14 items-center justify-center rounded-full border border-white/25 bg-[#001c40] font-display text-lg font-black shadow-lg shadow-black/30">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="mt-6 text-lg font-bold">{p.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/65">{p.text}</p>
+          <SectionHeading dark eyebrow="How it works" title={<>Tell us what you need moving. <br className="hidden lg:block" />We’ll take it from there.</>} intro="Four steps, from your quote to your proof of delivery." center />
+          <HowItWorks />
+        </div>
+      </section>
+
+      {/* 6. WHO WE WORK WITH: sector cards, then the airport band */}
+      <section className="container-x py-20 sm:py-28">
+        <SectionHeading eyebrow="Who we work with" title={<>Whatever you make or <br className="hidden sm:block" />move, we’ll get it there.</>} intro="From a part stopping your line to a pallet waiting at the airport, here is how we help." center />
+
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {sectors.map((s, i) => {
+            const Icon = sectorIcons[i];
+            return (
+              <Reveal key={s.id} delay={i * 100} className="group relative isolate flex min-h-[28rem] flex-col justify-end overflow-hidden rounded-3xl bg-[#081a3c] p-7 text-white">
+                <div className="absolute inset-x-0 top-0 -z-20 h-[48%]">
+                  <Image src={s.image} alt={s.imageAlt} fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                </div>
+                <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent from-10% via-[#0c2250]/70 via-35% to-[#081a3c] to-[48%]" aria-hidden="true" />
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/25 bg-white/15 backdrop-blur"><Icon className="h-5 w-5" /></span>
+                <h3 className="mt-4 text-2xl font-extrabold">{s.title}</h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-white/85">{s.body}</p>
+                <p className="mt-5">
+                  <Link href="#quote" className="group/link inline-flex items-center gap-2 border-b-2 border-[#8fb8ff] pb-1 text-sm font-bold">
+                    Get a quote <IconArrow className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
+                  </Link>
+                </p>
+              </Reveal>
+            );
+          })}
+        </div>
+
+        {/* New: Airport landside collections */}
+        <Reveal className="relative isolate mt-6 overflow-hidden rounded-3xl bg-[#081a3c] text-white shadow-2xl shadow-brand/20">
+          <div className="relative h-56 sm:h-72 lg:absolute lg:inset-y-0 lg:right-0 lg:-z-20 lg:h-auto lg:w-[68%]">
+            <Image src="/images/airport-landside.jpg" alt="Cargo being unloaded from an aircraft at an airport" fill sizes="(min-width:1024px) 60vw, 100vw" className="object-cover" />
+          </div>
+          <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-[#081a3c] from-32% via-[#0c2250]/80 via-55% to-[#0c2250]/25 lg:block" aria-hidden="true" />
+          <div className="max-w-xl p-7 sm:p-10 lg:p-14">
+            <p className="eyebrow flex items-center gap-3 text-[#8fb8ff]"><IconPlane className="h-5 w-5" />Airport landside collections</p>
+            <h3 className="mt-5 text-3xl font-black leading-[1.08] sm:text-4xl lg:max-w-md lg:text-[2.75rem]">Landed at the airport? We’ll collect it.</h3>
+            <p className="mt-5 max-w-md text-lg leading-relaxed text-white/80">Your freight has landed and the clock is running. We collect from the airport cargo terminal, landside, and drive it direct to your customer, day or night.</p>
+            <ul className="mt-6 space-y-3">
+              {airportTicks.map((t) => (
+                <li key={t} className="flex items-start gap-3"><IconCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#8fb8ff]" />{t}</li>
+              ))}
+            </ul>
+            <p className="mt-7 text-[11px] font-bold uppercase tracking-[0.14em] text-white/60">Airports we collect from</p>
+            <ul className="mt-3 flex max-w-md flex-wrap gap-2">
+              {airports.map((a) => (
+                <li key={a} className="rounded-full border border-white/30 bg-white/10 px-3.5 py-1 text-sm font-semibold">{a}</li>
+              ))}
+            </ul>
+            <Link href={quoteLink("airport")} className="group mt-8 inline-flex items-center gap-2 rounded-full bg-[#8fb8ff] px-6 py-3.5 text-sm font-bold text-[#06204a] transition hover:-translate-y-0.5 hover:bg-white">
+              Book an airport collection <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* New: INDUSTRIES WE COVER, then the consultancy banner at full width */}
+      <section className="bg-mist py-20 sm:py-28">
+        <div className="container-x">
+          <SectionHeading eyebrow="Industries we cover" title={<>Urgent freight for <br className="hidden sm:block" />every kind of business.</>} intro="Here are the industries we deliver for. Don’t see yours? Just ask." center />
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {industries.map((ind, i) => (
+              <Reveal key={ind.id} delay={(i % 3) * 100} className="overflow-hidden rounded-3xl border border-line bg-white transition hover:-translate-y-1 hover:shadow-xl">
+                <div className="relative aspect-[8/5]">
+                  <Image src={`/images/industries/${ind.id}.jpg`} alt={ind.imageAlt} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover" />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-lg font-extrabold text-ink">{ind.title}</h3>
+                  <p className="mt-2 text-[15px] leading-relaxed text-steel">{ind.body}</p>
+                </div>
               </Reveal>
             ))}
-          </ol>
           </div>
-        </div>
-      </section>
 
-      {/* 6. SECTORS + CONSULTANCY */}
-      <section className="container-x py-20 sm:py-28">
-        <div className="grid items-center gap-14 lg:grid-cols-2">
-          <Reveal className="relative">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-3xl sm:aspect-[5/4] lg:aspect-[4/5]">
-              <Image src="/images/fleet-loading-dock.jpg" alt="Freight vehicles at a warehouse loading dock" fill sizes="(min-width:1024px) 50vw, 100vw" className="object-cover" />
-            </div>
-            <div className="absolute -bottom-6 right-4 max-w-xs rounded-2xl border border-line bg-white p-5 shadow-2xl sm:-right-6">
-              <p className="flex items-center gap-2 font-display font-bold text-ink"><IconShield className="h-5 w-5 text-azure" />Personal accountability</p>
-              <p className="mt-2 text-sm text-steel">Every consignment is owned from booking to signature by the person you spoke to.</p>
-            </div>
+          <Reveal className="mt-12 flex flex-col items-center justify-center gap-5 text-center sm:flex-row sm:text-left">
+            <p className="text-ink">Not on the list? Tell us what you need moving and we’ll tell you what we can do.</p>
+            <Button href="#quote" className="shrink-0 !bg-none !bg-brand">Get a quote</Button>
           </Reveal>
 
-          <div>
-            <SectionHeading eyebrow="Who we serve" title="Built for businesses where delay costs money." />
-            <div className="mt-10 space-y-4">
-              {sectors.map((s, i) => {
-                const Icon = sectorIcons[i];
-                return (
-                  <Reveal key={s.title} delay={i * 100} className="group flex gap-5 rounded-2xl border border-line p-5 transition hover:border-azure/40 hover:bg-mist/50">
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-brand-gradient text-white"><Icon /></span>
-                    <div>
-                      <h3 className="font-display text-lg font-bold">{s.title}</h3>
-                      <p className="mt-1 text-steel">{s.body}</p>
-                    </div>
-                  </Reveal>
-                );
-              })}
+          <Reveal className="mt-14 flex flex-col gap-6 rounded-3xl bg-ink p-8 text-white sm:p-10 lg:flex-row lg:items-center lg:justify-between">
+            <div className="max-w-2xl">
+              <p className="eyebrow text-[#8fb8ff]">Transport consultancy</p>
+              <p className="mt-3 text-lg leading-relaxed">Think you’re paying too much for freight? We’ll go through your transport costs with you and show you where you can save.</p>
             </div>
-            <Reveal className="mt-8 rounded-2xl bg-ink p-6 text-white">
-              <p className="eyebrow text-azure-light">Transport consultancy</p>
-              <p className="mt-2 text-lg font-semibold">Spending too much on freight? We review your transport costs and show you where to save.</p>
-              <Link href="/contact?service=consultancy#quote" className="group mt-4 inline-flex items-center gap-2 text-sm font-semibold text-azure-light">
-                Request a cost review <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Reveal>
-          </div>
+            <Button href={quoteLink("consultancy")} variant="ghost" className="shrink-0">Request a cost review</Button>
+          </Reveal>
         </div>
       </section>
+
+      {/* New: TRUSTED BY */}
+      <TrustedBy />
 
       {/* 7. WHY CORE CARGO */}
       <section className="bg-mist py-20 sm:py-28">
@@ -270,17 +330,16 @@ export default function Home() {
         </div>
       </section>
 
+      {/* New: TESTIMONIALS (stays hidden until three real quotes are added in site.ts) */}
+      <Testimonials />
+
       {/* 8. QUOTE */}
       <QuoteSection />
 
       {/* 9. FAQ */}
-      <section className="container-x grid gap-12 py-20 sm:py-28 lg:grid-cols-3">
-        <div>
-          <SectionHeading eyebrow="FAQ" title="Questions, answered." intro={`Can't find what you need? Email ${site.email} any time.`} />
-        </div>
-        <Reveal className="lg:col-span-2"><Faq items={faqs} /></Reveal>
-      </section>
+      <FaqSection />
 
+      {/* 10. FINAL CALL TO ACTION */}
       <CtaBand />
     </>
   );

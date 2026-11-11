@@ -3,9 +3,10 @@ import nodemailer from "nodemailer";
 
 // Fields we accept from the quote form, with their labels for the email
 const FIELDS: Record<string, string> = {
-  service: "Service", from: "Collection postcode", to: "Delivery postcode", date: "Ready for collection",
-  weight: "Weight (kg)", pallets: "Pallets", longest: "Longest item (m)", vehicle: "Vehicle", goods: "Goods",
-  spend: "Monthly transport spend", name: "Name", company: "Company", email: "Email", phone: "Phone", notes: "Notes",
+  service: "Service", from: "Collection postcode", to: "Delivery postcode", ready: "Ready for collection",
+  goods: "What they are moving", weight: "Weight (kg)", pallets: "Pallets", longest: "Longest item (m)",
+  tailLift: "Tail lift needed / no forklift", vehicle: "Suggested vehicle",
+  name: "Name", company: "Company", email: "Email", phone: "Phone",
 };
 
 const clean = (v: unknown) => String(v ?? "").replace(/[<>]/g, "").trim().slice(0, 2000);
@@ -29,7 +30,7 @@ export async function POST(req: Request) {
   const lines = Object.entries(FIELDS)
     .filter(([k]) => lead[k])
     .map(([k, label]) => `${label}: ${lead[k]}`);
-  const subject = `New ${lead.service === "consultancy" ? "consultancy enquiry" : "quote request"}: ${lead.from || lead.company || lead.name}${lead.to ? ` to ${lead.to}` : ""}`;
+  const subject = `New ${lead.service === "Transport consultancy" ? "consultancy enquiry" : "quote request"}: ${lead.from || lead.company || lead.name}${lead.to ? ` to ${lead.to}` : ""}`;
 
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, LEADS_TO } = process.env;
 

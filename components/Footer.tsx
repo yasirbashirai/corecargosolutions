@@ -50,7 +50,7 @@ export default function Footer() {
 
       <div className="relative border-t border-white/10">
         <div className="container-x flex flex-col gap-2 py-6 text-xs sm:flex-row sm:items-center sm:justify-between">
-          <p>© {year} {site.name}. All rights reserved.</p>
+          <p>© {year} {site.name}. All rights reserved. · <Link href="/privacy" className="hover:text-white">Privacy policy</Link></p>
           <p>Same Day Freight Delivery · Dedicated Transport Services · Urgent Transport Services</p>
         </div>
       </div>

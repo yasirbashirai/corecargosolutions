@@ -1,4 +1,4 @@
-import { site, services } from "./site";
+import { site, services, faqText, type FaqItem } from "./site";
 
 // LocalBusiness structured data shared by every page (Google uses it for local results)
 export const businessSchema = {
@@ -36,8 +36,8 @@ export const businessSchema = {
   },
 };
 
-export const faqSchema = (items: { q: string; a: string }[]) => ({
+export const faqSchema = (items: FaqItem[]) => ({
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  mainEntity: items.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  mainEntity: items.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: faqText(f) } })),
 });

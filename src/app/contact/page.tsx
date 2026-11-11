@@ -4,7 +4,7 @@ import PageHero from "@/components/PageHero";
 import QuoteForm from "@/components/QuoteForm";
 import Reveal from "@/components/Reveal";
 import { IconClock, IconMail, IconMap, IconPhone } from "@/components/icons";
-import { services, site } from "@/lib/site";
+import { quoteServices, site } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact & Get a Quote | Urgent Transport Manchester",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default async function ContactPage({ searchParams }: { searchParams: Promise<{ service?: string }> }) {
   // Deep links such as /contact?service=consultancy preselect the service
   const { service } = await searchParams;
-  const defaultService = services.some((s) => s.id === service) ? service : "same-day";
+  const defaultService = quoteServices.some((s) => s.id === service) ? service : "same-day";
 
   const mapQuery = encodeURIComponent(`${site.address.street}, ${site.address.city} ${site.address.postcode}`);
 
@@ -25,7 +25,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
       <PageHero
         eyebrow="Contact"
         title={<>Get a quote. <span className="text-azure-light">Get moving.</span></>}
-        intro="Operations run 24 hours a day. Send your route and load details and we will confirm price and collection time."
+        intro="Operations run 24 hours a day. Send your route and load details and we’ll confirm price and collection time."
         image="/images/office-reception.jpg"
         imageAlt="Core Cargo Solutions office reception"
       />
@@ -33,7 +33,7 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
       <section id="quote" className="container-x scroll-mt-28 py-20 sm:py-24">
         <div className="grid items-start gap-12 lg:grid-cols-5">
           <Reveal className="lg:col-span-3">
-            <QuoteForm defaultService={defaultService} title="Request a quote or review" />
+            <QuoteForm defaultService={defaultService} title="Request a quote" />
           </Reveal>
 
           <div className="space-y-5 lg:col-span-2">

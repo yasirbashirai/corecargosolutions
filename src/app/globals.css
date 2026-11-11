@@ -100,3 +100,50 @@ h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
 
 /* Native <details> accordion: hide default marker */
 summary::-webkit-details-marker { display: none; }
+
+/* ---------- Home page motion (added with the November wording round) ---------- */
+
+/* Trusted by: two rows of names sliding in opposite directions */
+.marquee-row { display: flex; width: max-content; animation: marquee 60s linear infinite; }
+.marquee-row.is-reverse { animation-direction: reverse; }
+.is-paused .marquee-row { animation-play-state: paused; }
+.fade-edges {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+/* Final call to action: van driving along the route on a loop */
+.route-van {
+  offset-path: path("M30 250 C 110 250, 110 150, 180 150 S 250 60, 300 20");
+  offset-rotate: auto;
+  animation: drive 6s ease-in-out infinite;
+}
+.route-line { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw-route 6s ease-in-out infinite; }
+@keyframes drive {
+  0% { offset-distance: 0%; opacity: 0; }
+  8% { opacity: 1; }
+  80% { offset-distance: 100%; opacity: 1; }
+  92%, 100% { offset-distance: 100%; opacity: 0; }
+}
+@keyframes draw-route {
+  0% { stroke-dashoffset: 1; opacity: 1; }
+  80% { stroke-dashoffset: 0; opacity: 1; }
+  92%, 100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+/* Soft pulsing dot used on the "live" pills */
+@keyframes soft-ping {
+  0% { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+.live-dot { position: relative; display: inline-flex; height: 0.5rem; width: 0.5rem; border-radius: 9999px; background: #34d399; }
+.live-dot::after { content: ""; position: absolute; inset: 0; border-radius: 9999px; background: #34d399; animation: soft-ping 1.8s ease-out infinite; }
+
+/* Testimonials swipe sideways on a phone without showing a scrollbar */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .route-van { offset-distance: 70%; opacity: 1; }
+  .route-line { stroke-dashoffset: 0.3; }
+}

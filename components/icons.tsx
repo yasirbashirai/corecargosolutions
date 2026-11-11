@@ -21,3 +21,12 @@ export const IconGlobe = svg(<><circle cx="12" cy="12" r="9" /><path d="M3 12h18
 export const IconTools = svg(<path d="M14 7a4 4 0 0 0 5 5l2 2-7 7-2-2a4 4 0 0 0-5-5L3 10l7-7z" />);
 export const IconPlus = svg(<path d="M12 5v14M5 12h14" />);
 export const IconDoc = svg(<><path d="M6 3h9l4 4v14H6z" /><path d="M14 3v5h5M9 13h6M9 17h6" /></>);
+export const IconPlane = svg(<path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z" />);
+export const IconBox = svg(<><path d="M12 3 4 7v10l8 4 8-4V7z" /><path d="m4 7 8 4 8-4M12 11v10" /></>);
+export const IconTimer = svg(<><circle cx="12" cy="13.5" r="7.5" /><path d="M12 9.5v4l2.5 1.5M9.5 3h5M12 3v3" /></>);
+export const IconSearch = svg(<><circle cx="11" cy="11" r="6.5" /><path d="m20 20-4.3-4.3" /></>);
+export const IconUser = svg(<><circle cx="12" cy="8.5" r="3.5" /><path d="M5 20c.6-3.6 3.4-5.5 7-5.5s6.4 1.9 7 5.5" /></>);
+export const IconPause = svg(<path d="M8.5 5v14M15.5 5v14" />);
+export const IconPlay = svg(<path d="M8 5v14l11-7z" />);
+export const IconBeam = svg(<path d="M7 4h10M7 20h10M12 4v16" />);
+export const IconVan = svg(<><path d="M2.5 7h10.5l5 4.5h3.5V16h-2M2.5 7v9h2M9 16h6" /><circle cx="6.8" cy="16.5" r="2" /><circle cx="17" cy="16.5" r="2" /></>);

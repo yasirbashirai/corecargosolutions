@@ -6,7 +6,7 @@ import { IconCheck, IconClock, IconMail } from "./icons";
 /** Quote form block placed on every major page. */
 export default function QuoteSection({
   defaultService,
-  title = "Tell us what needs to move. We will handle the rest.",
+  title = "Tell us what needs to move. We’ll handle the rest.",
 }: {
   defaultService?: string;
   title?: string;
@@ -23,9 +23,10 @@ export default function QuoteSection({
           </p>
           <ul className="mt-8 space-y-4">
             {[
-              "Vehicle suggested automatically from your load details",
-              "Price and collection time confirmed before booking",
+              "Vehicle suggested from your load details",
+              "Price and collection time confirmed before you book",
               "Dedicated vehicle, direct from collection to delivery",
+              "Proof of delivery emailed within the hour",
             ].map((t) => (
               <li key={t} className="flex gap-3">
                 <span className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-gradient text-white"><IconCheck className="h-3.5 w-3.5" /></span>
