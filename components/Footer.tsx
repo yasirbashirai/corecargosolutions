@@ -46,6 +46,24 @@ export default function Footer() {
             <li className="flex gap-3"><IconClock className="h-5 w-5 shrink-0 text-azure-light" /><span>Open {site.hours}</span></li>
           </ul>
         </div>
+
+        <div className="md:col-span-2 lg:col-start-8 lg:col-span-5">
+          <h3 className="eyebrow text-white">Our memberships</h3>
+          <ul className="mt-5 flex flex-wrap items-center gap-8" aria-label="Our memberships">
+            <li>
+              <a href="https://logistics.org.uk/" target="_blank" rel="noopener noreferrer" className="inline-flex rounded-sm transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-white">
+                <Image src="/logos/logistics-uk.svg" alt="Logistics UK" width={174} height={19} className="fm-logistics" unoptimized />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://bifa.org/" target="_blank" rel="noopener noreferrer" className="inline-flex rounded-sm transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-white">
+                <Image src="/logos/bifa-reversed.svg" alt="BIFA" width={84} height={68} className="fm-bifa" unoptimized />
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div className="relative border-t border-white/10">

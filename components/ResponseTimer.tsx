@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import useReducedMotion from "./useReducedMotion";
 
 const TOTAL = 600; // 10 minutes, in seconds
 
@@ -10,11 +11,13 @@ const TOTAL = 600; // 10 minutes, in seconds
  */
 export default function ResponseTimer() {
   const [left, setLeft] = useState(TOTAL);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
+    if (reducedMotion) return;
     const id = setInterval(() => setLeft((s) => (s <= 0 ? TOTAL : s - 1)), 1000);
     return () => clearInterval(id);
-  }, []);
+  }, [reducedMotion]);
 
   const mm = String(Math.floor(left / 60)).padStart(2, "0");
   const ss = String(left % 60).padStart(2, "0");

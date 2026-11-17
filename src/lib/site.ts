@@ -133,22 +133,28 @@ export const sectors = [
     id: "manufacturers",
     title: "Manufacturers",
     body: "When a part is holding up your line, we collect it and drive it straight to you. Raw materials and finished orders too, so production keeps running.",
-    image: "/images/sectors/manufacturers.jpg",
-    imageAlt: "Forklift loading boxed goods at a factory yard",
+    image: "/images/manufacturers.webp",
+    imageAlt: "A factory worker in safety glasses checks a clutch plate on a packing line",
+    imagePosition: "50% 38%",
+    tags: ["Line-down parts", "Raw materials", "Finished orders"],
   },
   {
     id: "freight-forwarders",
     title: "Freight forwarders",
     body: "We cover the UK leg for you, from a port or an airport to your customer’s door. You get clear updates and a proof of delivery to pass straight on.",
-    image: "/images/sectors/freight-forwarders.jpg",
-    imageAlt: "Container cranes at a port at dusk",
+    image: "/images/freight-forwarders.webp",
+    imageAlt: "A logistics coordinator at his desk tracking a shipment on a spreadsheet",
+    imagePosition: "30% 50%",
+    tags: ["Port to door", "Airport to door", "POD to pass on"],
   },
   {
     id: "fabricators",
     title: "Fabricators",
     body: "Steel, frames and fabricated parts need the right vehicle. We match it to your load, from a long-wheelbase van to a rigid, and take it there in one trip.",
-    image: "/images/sectors/fabricators.jpg",
-    imageAlt: "Steel beam being lifted on a fabrication site",
+    image: "/images/fabricators.webp",
+    imageAlt: "A fabricator in a welding mask grinding steel with sparks flying",
+    imagePosition: "50% 60%",
+    tags: ["Steel and frames", "Long loads", "One trip"],
   },
 ];
 
@@ -160,7 +166,7 @@ export const airports = ["Manchester", "Heathrow", "East Midlands", "Birmingham"
 export const industries = [
   { id: "aerospace-defence", title: "Aerospace & Defence", body: "Time-critical parts and equipment, collected and delivered with care.", imageAlt: "Aircraft engine in a hangar" },
   { id: "automotive", title: "Automotive", body: "Line-down parts and components, to the plant, the dealer or the garage.", imageAlt: "Robots assembling a car body on a production line" },
-  { id: "engineering", title: "Engineering", body: "Machine parts, tooling and heavy awkward loads on the right vehicle.", imageAlt: "Engineer operating a CNC machine" },
+  { id: "engineering", title: "Engineering", body: "Machine parts, tooling and heavy awkward loads on the right vehicle.", imageAlt: "Two engineers in hard hats review drawings and a tablet beside a machine" },
   { id: "events-entertainment", title: "Events & Entertainment", body: "Staging, sound and lighting kit, on time for load-in and load-out.", imageAlt: "Stage lighting rig at an event" },
   { id: "it", title: "IT", body: "Servers, networking kit and equipment, delivered straight to site.", imageAlt: "Server racks in a data room" },
   { id: "manufacturing-packaging", title: "Manufacturing & Packaging", body: "Materials in and finished goods out, so your line never waits.", imageAlt: "Conveyor lines in a packaging plant" },
@@ -169,9 +175,22 @@ export const industries = [
   { id: "retail", title: "Retail", body: "Stock, displays and urgent top-ups, delivered where they’re needed.", imageAlt: "Bright retail shop floor with product displays" },
 ];
 
-// Trusted by strip. Plain name slots for now.
-// TODO: only list customers who have agreed to be named, and swap in their official logo files.
-export const customers = ["GXO", "Rolls-Royce", "Sealco", "B&Q", "Dunelm", "Screwfix", "Aston Martin", "JLR", "Kellogg’s", "JCB", "Sephora", "China Cargo Airlines"];
+// Logo artwork extracted without colour changes from the supplied Round 2 PDF.
+// Sealco remains text until its logo is supplied. Member artwork remains provisional.
+export const customers: { name: string; image?: string; height: number; width: number }[] = [
+  { name: "GXO", image: "/logos/gxo.svg", height: 34, width: 99 },
+  { name: "Rolls-Royce", image: "/logos/rr.svg", height: 58, width: 37 },
+  { name: "Sealco", height: 0, width: 0 },
+  { name: "B&Q", image: "/logos/bq.svg", height: 48, width: 48 },
+  { name: "Dunelm", image: "/logos/dunelm.svg", height: 40, width: 104 },
+  { name: "Screwfix", image: "/logos/screwfix.svg", height: 26, width: 127 },
+  { name: "Aston Martin", image: "/logos/aston.svg", height: 18, width: 182 },
+  { name: "Jaguar Land Rover", image: "/logos/jlr.svg", height: 42, width: 48 },
+  { name: "Kellogg’s", image: "/logos/kelloggs.svg", height: 36, width: 101 },
+  { name: "JCB", image: "/logos/jcb.svg", height: 38, width: 101 },
+  { name: "Sephora", image: "/logos/sephora.svg", height: 20, width: 137 },
+  { name: "China Cargo Airlines", image: "/logos/china-cargo.png", height: 46, width: 204 },
+];
 
 export type Testimonial = {
   quote: string; // the customer's own words, two or three sentences
@@ -209,6 +228,11 @@ export const faqs: FaqItem[] = [
     q: "Which vehicle do I need?",
     a: "Tell us the weight, the number of pallets and the length of your longest item. The quote form suggests a vehicle and we confirm the size with you before you book. Not sure? Just ask.",
     link: { before: "You can also see every vehicle on our ", label: "vehicle range", href: "/services#vehicles", after: "." },
+  },
+  {
+    q: "What types of trailer and vehicle body can you provide?",
+    a: "We can provide both curtain-sider and box vehicles. A curtain-sider opens down the side, so a forklift can load from the side and tall or awkward loads are easy to get on. A box vehicle gives you a fully enclosed, secure load area that keeps your goods out of the weather. Tell us which you need when you ask for a quote, or give us the load details and we’ll recommend one.",
+    link: { before: "You can see the sizes on our ", label: "vehicle range", href: "#vehicles", after: "." },
   },
   {
     q: "Are you available at night and at weekends?",

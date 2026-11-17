@@ -52,9 +52,9 @@ export default function Header() {
 
       {/* Main navigation */}
       <div className={`border-b transition-all duration-300 ${scrolled ? "border-line bg-white/90 shadow-lg shadow-ink/5 backdrop-blur-xl" : "border-transparent bg-white"}`}>
-        <div className="container-x flex h-18 items-center justify-between gap-6 py-3">
-          <Link href="/" aria-label={`${site.name} home`} className="shrink-0">
-            <Image src="/images/logo-horizontal.png" alt={site.name} width={1404} height={300} priority className="h-11 w-auto sm:h-12" />
+        <div className={`container-x flex items-center justify-between gap-3 transition-[height] duration-300 lg:gap-6 ${scrolled ? "h-20" : "h-20 sm:h-22 lg:h-24 xl:h-26"}`}>
+          <Link href="/" aria-label={`${site.name} home`} className="min-w-0 shrink-0">
+            <Image src="/images/logo-horizontal.png" alt={site.name} width={1404} height={300} preload className={`w-auto max-w-[calc(100vw-6rem)] object-contain transition-[height] duration-300 ${scrolled ? "h-14" : "h-14 sm:h-16 lg:h-[72px] xl:h-20"}`} />
           </Link>
 
           <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
@@ -96,7 +96,7 @@ export default function Header() {
         </div>
 
         {/* Mobile drawer */}
-        <div className={`grid overflow-hidden transition-all duration-300 lg:hidden ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
+        <div inert={!open} className={`grid overflow-hidden transition-all duration-300 lg:hidden ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
           <div className="min-h-0">
             <nav className="container-x flex flex-col gap-1 pb-6" aria-label="Mobile">
               {nav.map((item) => (

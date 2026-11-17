@@ -3,11 +3,11 @@
 Conversion-focused website for **Core Cargo Solutions Ltd**, a Manchester-based transport company offering urgent, same day and next day dedicated transport across the UK, plus transport consultancy.
 
 ## Pages
-- `/` Home: hero with countdown and UK map, key stats, services, vehicle range (9 vehicles), how it works, sectors, airport collections, industries, trusted by, why Core Cargo, testimonials (hidden until real quotes are added), quote form, searchable FAQ, final call to action
+- `/` Home: photo hero with countdown and UK/Ireland map (18 places), key stats, services, vehicle range (9 vehicles), how it works, four sector cards including airport collections, industries, customer logos, why Core Cargo, testimonials (hidden until real quotes are added), quote form, searchable FAQ (11 questions), final call to action
 - `/privacy`: privacy policy (draft)
 - `/services`: all 4 services, vehicle range, dedicated vs network comparison
 - `/about`: story, Strategy / Optimise / Deliver, values
-- `/contact`: quote form, contact details, map (`?service=consultancy` preselects consultancy)
+- `/contact`: quote form, contact details, map (`?service=consultancy` preselects consultancy; `?service=airport#quote` preselects airport collections)
 - `/blog` + `/blog/[slug]`: 4 SEO articles
 
 ## Stack
@@ -29,7 +29,18 @@ npm run build && npm start
 - Add the 24/7 phone number to `site.phone` in `src/lib/site.ts` (a "Call now" button then appears in the final call to action)
 - Set SMTP env vars on the host so quote requests are emailed
 - Vehicle pictures are the client's own Core Cargo images in `public/images/vehicles/`. The blog, about and sharing banners (`scene-*.jpg`, `og-core-cargo.jpg`) are built from them
-- Sector, airport and industry photos in `public/images/` are low-resolution placeholders taken from the design document. Replace with full-size photos (same file names)
+- The Round 2 supplied photos are installed for the hero, Same Day service, three sector cards and Engineering tile. Their prescribed crops and responsive photo bands are implemented.
+- The airport photo is retained as requested until its replacement is supplied. The fabricators photo is 612 px wide and the hero is 1535 px wide; replace them with larger originals when available, without enlarging these copies.
+- Customer logos and the temporary membership marks were extracted as vector paths from the supplied developer PDF, preserving their artwork and colours; China Cargo uses the supplied PNG. The referenced ZIP was not available. Sealco remains text. Replace reference copies with supplied brand-pack files when available, especially the official Logistics UK and BIFA member logos.
+
+## Round 2 implementation
+- Responsive header logo/bar sizes: 56/80, 64/88, 72/96 and 80/104 px; scrolled size 56/80 px.
+- Updated hero wording, DAF background, Manchester hub and 18-place UK/Ireland route animation.
+- MAN lorry photo in the Same Day card; four equal sector cards with supplied photos, job tags and the airport enquiry link.
+- Engineering photo and alt text; customer logo rows with hover/manual pause and a fully visible static layout for reduced motion.
+- New trailer/body FAQ in position five, vehicle-range anchor and matching plain-text structured data.
+- Logistics UK and BIFA membership block beneath Company and Operations.
+- Reduced motion stops the map cursor, timer ring, pulses and logo movement. Closed mobile navigation is excluded from keyboard and screen-reader interaction.
 
 ## Client to confirm before launch (from the November 2026 wording document)
 - "Within 10 minutes" and "Proof of delivery within the hour" promises are true

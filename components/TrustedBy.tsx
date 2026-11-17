@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import type { CSSProperties } from "react";
+import Image from "next/image";
 import { customers } from "@/lib/site";
 import Reveal from "./Reveal";
 import SectionHeading from "./SectionHeading";
 import { IconPause, IconPlay } from "./icons";
 
 /**
- * "Trusted by" strip: two rows of customer names sliding slowly in opposite directions.
- * Names are plain text slots. Swap each for the customer's official logo file when supplied.
+ * Two logo rows slide in opposite directions and pause on hover or by the button.
+ * Each supplied mark retains its own colours and proportion; Sealco stays text.
  */
 export default function TrustedBy() {
   const [paused, setPaused] = useState(false);
@@ -24,15 +26,19 @@ export default function TrustedBy() {
         center
       />
 
-      <Reveal className={`fade-edges mt-12 space-y-8 overflow-hidden border-y border-line bg-gradient-to-b from-white via-mist/60 to-white py-10 ${paused ? "is-paused" : ""}`}>
+      <Reveal className={`tb-track fade-edges mt-12 space-y-8 overflow-hidden border-y border-line bg-gradient-to-b from-white via-mist/60 to-white py-10 ${paused ? "is-paused" : ""}`}>
         {rows.map((row, r) => (
           <div key={r} className={`marquee-row ${r === 1 ? "is-reverse" : ""}`}>
             {/* Each row is repeated so the loop has no gap. Only the first copy is read by screen readers. */}
             {[0, 1, 2, 3].map((copy) => (
               <ul key={copy} className="flex shrink-0 items-center" aria-hidden={copy > 0}>
-                {row.map((name) => (
-                  <li key={name} className="whitespace-nowrap px-8 font-display text-2xl font-extrabold text-[#5a6b8c] sm:px-10 sm:text-3xl">
-                    {name}
+                {row.map((customer) => (
+                  <li key={customer.name} className="flex h-16 items-center whitespace-nowrap px-7 sm:px-10">
+                    {customer.image ? (
+                      <Image src={customer.image} alt={customer.name} width={customer.width} height={customer.height} unoptimized className="tb-logo" style={{ "--logo-height": `${customer.height}px` } as CSSProperties} />
+                    ) : (
+                      <span className="font-display text-sm font-bold uppercase tracking-[.14em] text-[#7b8fb0]">{customer.name}</span>
+                    )}
                   </li>
                 ))}
               </ul>

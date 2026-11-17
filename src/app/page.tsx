@@ -13,13 +13,13 @@ import SectionHeading from "@/components/SectionHeading";
 import Testimonials from "@/components/Testimonials";
 import TrustedBy from "@/components/TrustedBy";
 import UkMap from "@/components/UkMap";
+import WhoWeWorkWith from "@/components/WhoWeWorkWith";
 import VehicleSelector from "@/components/VehicleSelector";
-import { IconArrow, IconBeam, IconBolt, IconBox, IconCalendar, IconChart, IconCheck, IconClock, IconFactory, IconGlobe, IconMap, IconPlane, IconShield, IconTimer, IconTruck } from "@/components/icons";
-import { airports, faqs, industries, sectors, services, vehicles } from "@/lib/site";
+import { IconArrow, IconBolt, IconBox, IconCalendar, IconChart, IconCheck, IconClock, IconMap, IconShield, IconTimer, IconTruck } from "@/components/icons";
+import { faqs, industries, services, vehicles } from "@/lib/site";
 import { faqSchema } from "@/lib/schema";
 
 const serviceIcons = [IconTruck, IconBolt, IconCalendar, IconChart];
-const sectorIcons = [IconFactory, IconGlobe, IconBeam];
 
 // Key stats: each one is a commitment with a plain sentence under it
 const metrics = [
@@ -39,13 +39,6 @@ const ticker: [string, boolean][] = [
   ["Nationwide", true],
 ];
 
-const airportTicks = [
-  "Collected straight from the cargo terminal",
-  "Driven direct, with no depot stops",
-  "Any hour, any day of the week",
-  "Proof of delivery within the hour",
-];
-
 // Service cards link to the quote form with that service already selected
 const quoteLink = (id: string) => `/?service=${id}#quote`;
 
@@ -55,29 +48,27 @@ export default function Home() {
       <JsonLd data={faqSchema(faqs)} />
 
       {/* 1. HERO: strong headline, two CTAs, live dispatch widget */}
-      <section className="relative isolate overflow-hidden bg-ink text-white">
-        {/* Plain brand background, as in the design (no stock truck photo) */}
-        <div className="absolute inset-0 -z-20 bg-gradient-to-br from-[#00142e] via-[#001c40] to-[#003880]" />
-        <div className="absolute -right-40 top-0 -z-10 h-[40rem] w-[40rem] rounded-full bg-azure/25 blur-3xl" aria-hidden="true" />
-        <div className="bg-grid absolute inset-0 -z-10 opacity-25" aria-hidden="true" />
-
-        <div className="container-x grid items-center gap-12 pb-24 pt-16 sm:pt-24 lg:grid-cols-12 lg:pb-32">
-          <div className="lg:col-span-7">
+      <section className="cc-hero relative isolate overflow-hidden text-white">
+        <div className="cc-hero__photo" aria-hidden="true">
+          <Image src="/images/core-cargo-truck-hero.webp" alt="" width={1535} height={1024} preload fetchPriority="high" unoptimized className="cc-hero__image" />
+        </div>
+        <div className="container-x cc-hero__layout">
+          <div className="cc-hero__copy">
             <Reveal>
               <ResponseTimer />
-              <h1 className="mt-6 text-[2.5rem] font-black leading-[1.05] sm:text-5xl lg:text-[3.6rem]">
-                Freight that can’t wait?{" "}
-                <span className="bg-gradient-to-r from-[#7fb4f2] to-white bg-clip-text text-transparent">We’re already on our way.</span>
+              <h1 className="cc-hero__title mt-6 font-black leading-[1.05]">
+                <span className="block">Freight that can’t wait?</span>{" "}
+                <span className="block bg-gradient-to-r from-[#7fb4f2] to-white bg-clip-text text-transparent">We’re already on our way.</span>
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/75">
-                A van and driver just for your load. We collect within the hour and drive it straight to the door, day or night, Nationwide.
+                A HGV vehicle or a van just for your load. We collect within the hour and drive it straight to the door, day or night, Nationwide.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
                 <Button href="/contact#quote">Get an instant quote</Button>
                 <Button href="/services" variant="ghost">Explore services</Button>
               </div>
               <ul className="mt-10 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/70">
-                {["No co-loading", "No depot transfers", "Proof of delivery"].map((t) => (
+                {["No co-loading", "No depot transfers", "No chasing proof of delivery"].map((t) => (
                   <li key={t} className="flex items-center gap-2"><IconCheck className="h-4 w-4 text-azure-light" />{t}</li>
                 ))}
               </ul>
@@ -85,8 +76,8 @@ export default function Home() {
           </div>
 
           {/* Dispatch widget: illustrates the dedicated, direct journey */}
-          <Reveal delay={200} className="lg:col-span-5">
-            <div className="rounded-3xl border border-white/15 bg-white/10 p-6 shadow-2xl backdrop-blur-xl">
+          <Reveal delay={200} className="cc-hero__dispatch">
+            <div className="rounded-3xl border border-white/25 bg-[#08234b]/65 p-6 shadow-2xl backdrop-blur-md">
               <div className="flex items-center justify-between">
                 <p className="eyebrow text-white/60">Dedicated run</p>
                 <span className="rounded-full bg-emerald-400/15 px-3 py-1 text-xs font-semibold text-emerald-300">Direct route</span>
@@ -151,22 +142,21 @@ export default function Home() {
           <Reveal className="shrink-0"><Button href="/services" variant="primary">All services</Button></Reveal>
         </div>
 
-        <div className="mt-12 grid gap-5 lg:grid-cols-4">
+        <div className="cs-grid mt-12 grid gap-5">
           {/* Featured card with the Core Cargo articulated lorry */}
-          <Reveal className="relative isolate flex min-h-[34rem] flex-col justify-end overflow-hidden rounded-3xl p-7 text-white sm:p-8 lg:col-span-2 lg:row-span-2">
-            {/* sky, then dark road from the horizon down */}
-            <div className="absolute inset-0 -z-20 bg-gradient-to-b from-[#5f86c9] to-[#b9c6dc] to-50%" aria-hidden="true" />
-            <div className="absolute inset-x-0 bottom-0 top-[47%] -z-20 bg-gradient-to-b from-[#465572] via-[#16233f] via-45% to-[#081530]" aria-hidden="true" />
-            <span className="absolute left-7 top-7 flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 backdrop-blur"><IconTruck className="h-5 w-5" /></span>
-            <div className="absolute inset-x-3 top-0 -z-10 flex h-[50.5%] items-end" aria-hidden="true">
-              <Image src="/images/vehicles/artic.png" alt="" width={953} height={258} sizes="(min-width:1024px) 600px, 95vw" className="h-auto w-full drop-shadow-xl" />
+          <Reveal className="cs-feature group relative isolate flex flex-col justify-end overflow-hidden rounded-3xl bg-[#081530] text-white">
+            <div className="cs-feature__photo">
+              <Image src="/images/services-same-day-truck.webp" alt="" fill sizes="(min-width:981px) 50vw, (min-width:621px) 50vw, 100vw" className="cs-feature__image" />
             </div>
+            <span className="absolute left-7 top-7 z-10 flex h-11 w-11 items-center justify-center rounded-xl bg-white/20 backdrop-blur"><IconTruck className="h-5 w-5" /></span>
+            <div className="cs-feature__body relative p-7 sm:p-8">
             <h3 className="text-xl font-extrabold">{services[0].title}</h3>
             <p className="mt-3 max-w-md text-white/80">{services[0].short}</p>
             <p className="mt-4"><span className="inline-flex rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">{services[0].tag}</span></p>
             <div className="mt-6 flex items-center justify-between gap-4">
               <Link href={`/services#${services[0].id}`} className="group inline-flex items-center gap-2 text-sm font-bold">Learn more <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" /></Link>
               <Link href={quoteLink(services[0].id)} className="rounded-full border border-white/60 px-4 py-1.5 text-sm font-semibold transition hover:bg-white hover:text-brand">Get a quote</Link>
+            </div>
             </div>
           </Reveal>
 
@@ -177,7 +167,7 @@ export default function Home() {
               <Reveal
                 key={s.id}
                 delay={(i + 1) * 100}
-                className={`group flex flex-col rounded-3xl border p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${highlight ? "border-transparent bg-brand-gradient text-white lg:col-span-2" : "border-line bg-white hover:border-azure/40"}`}
+                className={`group flex flex-col rounded-3xl border p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl ${highlight ? "cs-urgent border-transparent bg-brand-gradient text-white" : "border-line bg-white hover:border-azure/40"}`}
               >
                 <span className={`flex h-11 w-11 items-center justify-center rounded-xl ${highlight ? "bg-white/15" : "bg-mist text-brand"}`}><Icon className="h-5 w-5" /></span>
                 <h3 className={`mt-6 text-xl font-extrabold ${highlight ? "" : "text-ink"}`}>{s.title}</h3>
@@ -198,7 +188,7 @@ export default function Home() {
       </section>
 
       {/* 4. VEHICLE RANGE (interactive) */}
-      <section className="bg-mist py-20 sm:py-28">
+      <section id="vehicles" className="scroll-mt-40 bg-mist py-20 sm:py-28">
         <div className="container-x">
           <SectionHeading
             eyebrow="Vehicle range"
@@ -219,59 +209,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 6. WHO WE WORK WITH: sector cards, then the airport band */}
-      <section className="container-x py-20 sm:py-28">
-        <SectionHeading eyebrow="Who we work with" title={<>Whatever you make or <br className="hidden sm:block" />move, we’ll get it there.</>} intro="From a part stopping your line to a pallet waiting at the airport, here is how we help." center />
-
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {sectors.map((s, i) => {
-            const Icon = sectorIcons[i];
-            return (
-              <Reveal key={s.id} delay={i * 100} className="group relative isolate flex min-h-[28rem] flex-col justify-end overflow-hidden rounded-3xl bg-[#081a3c] p-7 text-white">
-                <div className="absolute inset-x-0 top-0 -z-20 h-[48%]">
-                  <Image src={s.image} alt={s.imageAlt} fill sizes="(min-width:768px) 33vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
-                </div>
-                <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent from-10% via-[#0c2250]/70 via-35% to-[#081a3c] to-[48%]" aria-hidden="true" />
-                <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/25 bg-white/15 backdrop-blur"><Icon className="h-5 w-5" /></span>
-                <h3 className="mt-4 text-2xl font-extrabold">{s.title}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-white/85">{s.body}</p>
-                <p className="mt-5">
-                  <Link href="#quote" className="group/link inline-flex items-center gap-2 border-b-2 border-[#8fb8ff] pb-1 text-sm font-bold">
-                    Get a quote <IconArrow className="h-4 w-4 transition-transform group-hover/link:translate-x-1" />
-                  </Link>
-                </p>
-              </Reveal>
-            );
-          })}
-        </div>
-
-        {/* New: Airport landside collections */}
-        <Reveal className="relative isolate mt-6 overflow-hidden rounded-3xl bg-[#081a3c] text-white shadow-2xl shadow-brand/20">
-          <div className="relative h-56 sm:h-72 lg:absolute lg:inset-y-0 lg:right-0 lg:-z-20 lg:h-auto lg:w-[68%]">
-            <Image src="/images/airport-landside.jpg" alt="Cargo being unloaded from an aircraft at an airport" fill sizes="(min-width:1024px) 60vw, 100vw" className="object-cover" />
-          </div>
-          <div className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-[#081a3c] from-32% via-[#0c2250]/80 via-55% to-[#0c2250]/25 lg:block" aria-hidden="true" />
-          <div className="max-w-xl p-7 sm:p-10 lg:p-14">
-            <p className="eyebrow flex items-center gap-3 text-[#8fb8ff]"><IconPlane className="h-5 w-5" />Airport landside collections</p>
-            <h3 className="mt-5 text-3xl font-black leading-[1.08] sm:text-4xl lg:max-w-md lg:text-[2.75rem]">Landed at the airport? We’ll collect it.</h3>
-            <p className="mt-5 max-w-md text-lg leading-relaxed text-white/80">Your freight has landed and the clock is running. We collect from the airport cargo terminal, landside, and drive it direct to your customer, day or night.</p>
-            <ul className="mt-6 space-y-3">
-              {airportTicks.map((t) => (
-                <li key={t} className="flex items-start gap-3"><IconCheck className="mt-0.5 h-5 w-5 shrink-0 text-[#8fb8ff]" />{t}</li>
-              ))}
-            </ul>
-            <p className="mt-7 text-[11px] font-bold uppercase tracking-[0.14em] text-white/60">Airports we collect from</p>
-            <ul className="mt-3 flex max-w-md flex-wrap gap-2">
-              {airports.map((a) => (
-                <li key={a} className="rounded-full border border-white/30 bg-white/10 px-3.5 py-1 text-sm font-semibold">{a}</li>
-              ))}
-            </ul>
-            <Link href={quoteLink("airport")} className="group mt-8 inline-flex items-center gap-2 rounded-full bg-[#8fb8ff] px-6 py-3.5 text-sm font-bold text-[#06204a] transition hover:-translate-y-0.5 hover:bg-white">
-              Book an airport collection <IconArrow className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
-        </Reveal>
-      </section>
+      {/* 6. WHO WE WORK WITH */}
+      <WhoWeWorkWith />
 
       {/* New: INDUSTRIES WE COVER, then the consultancy banner at full width */}
       <section className="bg-mist py-20 sm:py-28">
@@ -282,7 +221,7 @@ export default function Home() {
             {industries.map((ind, i) => (
               <Reveal key={ind.id} delay={(i % 3) * 100} className="overflow-hidden rounded-3xl border border-line bg-white transition hover:-translate-y-1 hover:shadow-xl">
                 <div className="relative aspect-[8/5]">
-                  <Image src={`/images/industries/${ind.id}.jpg`} alt={ind.imageAlt} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover" />
+                  <Image src={ind.id === "engineering" ? "/images/engineering.webp" : `/images/industries/${ind.id}.jpg`} alt={ind.imageAlt} fill sizes="(min-width:1024px) 33vw, (min-width:640px) 50vw, 100vw" className="object-cover" style={ind.id === "engineering" ? { objectPosition: "50% 90%" } : undefined} />
                 </div>
                 <div className="p-6">
                   <h3 className="text-lg font-extrabold text-ink">{ind.title}</h3>
