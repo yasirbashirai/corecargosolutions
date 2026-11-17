@@ -189,7 +189,7 @@ export const customers: { name: string; image?: string; height: number; width: n
   { name: "Kellogg’s", image: "/logos/kelloggs.svg", height: 36, width: 101 },
   { name: "JCB", image: "/logos/jcb.svg", height: 38, width: 101 },
   { name: "Sephora", image: "/logos/sephora.svg", height: 20, width: 137 },
-  { name: "China Cargo Airlines", image: "/logos/china-cargo.png", height: 46, width: 204 },
+  { name: "China Cargo Airlines", image: "/logos/china-cargo.png", height: 44, width: 220 },
 ];
 
 export type Testimonial = {

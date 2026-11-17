@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Montserrat } from "next/font/google";
+import localFont from "next/font/local";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import JsonLd from "@/components/JsonLd";
@@ -7,9 +7,9 @@ import { site } from "@/lib/site";
 import { businessSchema } from "@/lib/schema";
 import "./globals.css";
 
-// Brand typography: Montserrat for headlines, Inter for body copy
-const montserrat = Montserrat({ subsets: ["latin"], variable: "--font-montserrat", weight: ["500", "600", "700", "800", "900"] });
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+// Brand typography, self-hosted so builds and page loads never depend on Google Fonts
+const montserrat = localFont({ src: "../fonts/montserrat-latin.woff2", weight: "500 900", variable: "--font-montserrat", display: "swap" });
+const inter = localFont({ src: "../fonts/inter-latin.woff2", weight: "100 900", variable: "--font-inter", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),

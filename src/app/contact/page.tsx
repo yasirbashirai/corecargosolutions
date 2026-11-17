@@ -80,9 +80,11 @@ export default async function ContactPage({ searchParams }: { searchParams: Prom
       <section className="container-x pb-20">
         <Reveal className="relative isolate flex flex-col items-start gap-6 overflow-hidden rounded-[2rem] bg-navy-gradient p-8 text-white sm:flex-row sm:items-center sm:p-12">
           <Image src="/images/logo-mark-white.png" alt="" width={648} height={619} className="absolute -right-10 -top-8 -z-10 w-64 opacity-10" aria-hidden="true" />
-          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white font-display text-xl font-black text-brand">GI</span>
+          <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-white p-2.5">
+            <Image src="/images/logo-mark.png" alt="" width={648} height={619} className="h-full w-full object-contain" aria-hidden="true" />
+          </span>
           <div>
-            <p className="text-xl font-bold">Speak directly with {site.director}, Director.</p>
+            <p className="text-xl font-bold">Get in touch with our team.</p>
             <p className="mt-2 text-white/70">Every enquiry is handled personally. No call centres, no ticket queues.</p>
           </div>
         </Reveal>

@@ -10,6 +10,8 @@ const FIELDS: Record<string, string> = {
 };
 
 const clean = (v: unknown) => String(v ?? "").replace(/[<>]/g, "").trim().slice(0, 2000);
+// Keeps submitted values off the email header lines
+const oneLine = (v: string) => v.replace(/[\r\n]+/g, " ").trim();
 
 export async function POST(req: Request) {
   let body: Record<string, unknown>;
@@ -30,13 +32,19 @@ export async function POST(req: Request) {
   const lines = Object.entries(FIELDS)
     .filter(([k]) => lead[k])
     .map(([k, label]) => `${label}: ${lead[k]}`);
-  const subject = `New ${lead.service === "Transport consultancy" ? "consultancy enquiry" : "quote request"}: ${lead.from || lead.company || lead.name}${lead.to ? ` to ${lead.to}` : ""}`;
+  const head = oneLine(`${lead.from || lead.company || lead.name}${lead.to ? ` to ${lead.to}` : ""}`);
+  const subject = oneLine(`New ${lead.service === "Transport consultancy" ? "consultancy enquiry" : "quote request"}: ${head}`);
 
   const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, LEADS_TO } = process.env;
 
-  // Without SMTP settings, log the lead so nothing is lost during development
+  // Without SMTP settings, log the lead so nothing is lost during development.
+  // In production a logged lead is a lost customer, so fail loudly instead.
   if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
     console.log(`[quote] ${subject}\n${lines.join("\n")}`);
+    if (process.env.NODE_ENV === "production") {
+      console.error("[quote] SMTP is not configured. Set SMTP_HOST, SMTP_USER, SMTP_PASS and LEADS_TO so enquiries are emailed.");
+      return NextResponse.json({ error: "Email is not configured" }, { status: 503 });
+    }
     return NextResponse.json({ ok: true });
   }
 

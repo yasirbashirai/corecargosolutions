@@ -23,7 +23,13 @@ npm run build && npm start
 ## Configuration
 - Business details, services, vehicles, FAQs: `src/lib/site.ts`
 - Blog articles: `src/lib/posts.ts`
-- Form email: copy `.env.example` to `.env.local` and set the SMTP values. Without them, leads are logged to the server console.
+- Form email: copy `.env.example` to `.env.local` and set the SMTP values. In development, a lead without SMTP is logged to the console; in production the form refuses the submission and tells the visitor to email, so no enquiry is silently lost.
+- Canonicals and the sitemap use `NEXT_PUBLIC_SITE_URL`; set it before building for production.
+
+## Deployment
+- Node 20.9 or newer (`engines` in `package.json`).
+- Build with `npm run build`, serve with `npm start`, and set the env vars from `.env.example` on the host.
+- Security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, HSTS) are set in `next.config.ts`; `X-Powered-By` is disabled.
 
 ## Open items
 - Add the 24/7 phone number to `site.phone` in `src/lib/site.ts` (a "Call now" button then appears in the final call to action)
