@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { saveLead } from "@/lib/leads";
 
 // Fields we accept from the quote form, with their labels for the email
 const FIELDS: Record<string, string> = {
@@ -35,36 +36,56 @@ export async function POST(req: Request) {
   const head = oneLine(`${lead.from || lead.company || lead.name}${lead.to ? ` to ${lead.to}` : ""}`);
   const subject = oneLine(`New ${lead.service === "Transport consultancy" ? "consultancy enquiry" : "quote request"}: ${head}`);
 
-  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, LEADS_TO } = process.env;
-
-  // Without SMTP settings, log the lead so nothing is lost during development.
-  // In production a logged lead is a lost customer, so fail loudly instead.
-  if (!SMTP_HOST || !SMTP_USER || !SMTP_PASS) {
-    console.log(`[quote] ${subject}\n${lines.join("\n")}`);
-    if (process.env.NODE_ENV === "production") {
-      console.error("[quote] SMTP is not configured. Set SMTP_HOST, SMTP_USER, SMTP_PASS and LEADS_TO so enquiries are emailed.");
-      return NextResponse.json({ error: "Email is not configured" }, { status: 503 });
-    }
-    return NextResponse.json({ ok: true });
+  let saved = true;
+  try {
+    await saveLead(subject, Object.entries(FIELDS).filter(([k]) => lead[k]).map(([k, label]) => [label, lead[k]]));
+  } catch (err) {
+    saved = false;
+    console.error("[quote] could not save lead", err);
   }
 
+  const { RESEND_API_KEY, RESEND_FROM, SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, LEADS_TO } = process.env;
+  const to = LEADS_TO || "operations@corecargo.co.uk";
+
+  let emailed = false;
   try {
-    const transporter = nodemailer.createTransport({
-      host: SMTP_HOST,
-      port: Number(SMTP_PORT) || 587,
-      secure: Number(SMTP_PORT) === 465,
-      auth: { user: SMTP_USER, pass: SMTP_PASS },
-    });
-    await transporter.sendMail({
-      from: `"Core Cargo Website" <${SMTP_USER}>`,
-      to: LEADS_TO || "operations@corecargo.co.uk",
-      replyTo: lead.email,
-      subject,
-      text: lines.join("\n"),
-    });
-    return NextResponse.json({ ok: true });
+    if (RESEND_API_KEY) {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${RESEND_API_KEY}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: RESEND_FROM || "Core Cargo Website <onboarding@resend.dev>",
+          to: to.split(",").map((a) => a.trim()),
+          reply_to: lead.email,
+          subject,
+          text: lines.join("\n"),
+        }),
+      });
+      if (!res.ok) throw new Error(`Resend ${res.status}: ${await res.text()}`);
+      emailed = true;
+    } else if (SMTP_HOST && SMTP_USER && SMTP_PASS) {
+      const transporter = nodemailer.createTransport({
+        host: SMTP_HOST,
+        port: Number(SMTP_PORT) || 587,
+        secure: Number(SMTP_PORT) === 465,
+        auth: { user: SMTP_USER, pass: SMTP_PASS },
+      });
+      await transporter.sendMail({
+        from: `"Core Cargo Website" <${SMTP_USER}>`,
+        to,
+        replyTo: lead.email,
+        subject,
+        text: lines.join("\n"),
+      });
+      emailed = true;
+    }
   } catch (err) {
     console.error("[quote] email failed", err);
-    return NextResponse.json({ error: "Could not send" }, { status: 500 });
   }
+
+  if (!saved && !emailed) {
+    console.error(`[quote] LEAD NOT DELIVERED: ${subject}\n${lines.join("\n")}`);
+    return NextResponse.json({ error: "Could not deliver" }, { status: 500 });
+  }
+  return NextResponse.json({ ok: true });
 }
