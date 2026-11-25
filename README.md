@@ -23,12 +23,18 @@ npm run build && npm start
 ## Configuration
 - Business details, services, vehicles, FAQs: `src/lib/site.ts`
 - Blog articles: `src/lib/posts.ts`
-- Form email: copy `.env.example` to `.env.local` and set the SMTP values. In development, a lead without SMTP is logged to the console; in production the form refuses the submission and tells the visitor to email, so no enquiry is silently lost.
+- Leads and email: copy `.env.example` to `.env` and set Resend (or SMTP) plus `ADMIN_PASSWORD`. Leads are stored in Upstash Redis when configured, otherwise in `data/leads.json`, and shown at `/admin/leads`. In development a lead without email credentials is logged to the server console; in production the form refuses the submission and tells the visitor to email, so no enquiry is silently lost.
 - Canonicals and the sitemap use `NEXT_PUBLIC_SITE_URL`; set it before building for production.
 
 ## Deployment
-- Node 20.9 or newer (`engines` in `package.json`).
-- Build with `npm run build`, serve with `npm start`, and set the env vars from `.env.example` on the host.
+Live on **Vercel** at https://www.corecargo.co.uk, deploying automatically from this GitHub
+repository (`main`). The full runbook, required environment variables, Upstash setup and
+post-deploy checks are in [`DEPLOY.md`](./DEPLOY.md).
+
+- Node 20.9 or newer (`engines` in `package.json`); Vercel uses its project Node version.
+- Build `npm run build`, verify `npm run typecheck`; Vercel runs the build on every push.
+- Leads need Upstash Redis in production: Vercel's filesystem is read-only, so the local
+  `data/leads.json` fallback only works in development or on a persistent server.
 - Security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, `Permissions-Policy`, HSTS) are set in `next.config.ts`; `X-Powered-By` is disabled.
 
 ## Open items
